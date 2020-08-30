@@ -53,6 +53,7 @@
     background: white;
     border-radius: 50%;
     z-index: 2;
+    cursor: pointer;
 }
 
 .video-play {
@@ -66,6 +67,7 @@
 .video-play i {
     font-size: 20px;
     color: white;
+    cursor: pointer;
 }
 
 .video-time {
@@ -88,6 +90,7 @@
 .video-full i {
     font-size: 20px;
     color: white;
+    cursor: pointer;
 }
 
 .video-volume {
@@ -103,6 +106,7 @@
     margin-right: 20px;
     font-size: 20px;
     color: white;
+    cursor: pointer;
 }
 
 .video-volprogress {
@@ -130,4 +134,5 @@
     background: white;
     border-radius: 50%;
     z-index: 1;
+    cursor: pointer;
 }

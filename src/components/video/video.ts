@@ -75,7 +75,58 @@ class Video implements Icomponent {
   }
 
   handle() {
+    const videoContent = this.tempContainer.querySelector(`.${styles['video-content']}`)
+    const videoControls = this.tempContainer.querySelector(`.${styles['video-controls']}`)
+    const videoPlay = this.tempContainer.querySelector(`.${styles['video-play']} i`)
+    const videoTimes = this.tempContainer.querySelectorAll(`.${styles['video-time']} span`)
+    let timer
 
+    // 个位补零操作
+    function setZero(num: number): string {
+      if (num < 10) {
+        return '0' + num
+      } else {
+        return `${num}`
+      }
+    }
+
+    // 格式化时间
+    function formatTime(second: number): string {
+      const num = Math.round(second)
+      const min = Math.floor(num / 60)
+      const sec = num % 60
+      return `${setZero(min)}:${setZero(sec)}`
+    }
+
+    // 视频是否加载完毕
+    videoContent.addEventListener('canplay', () => {
+      videoTimes[1].innerHTML = formatTime(videoContent.duration)
+    })
+
+    // 播放进度变化
+    function playing() {
+      videoTimes[0].innerHTML = formatTime(videoContent.currentTime)
+    }
+
+    // 视频播放事件
+    videoContent.addEventListener('play', () => {
+      videoPlay.className = 'iconfont iconzantingtingzhi'
+      timer = setInterval(playing, 1000)
+    })
+
+    // 视频暂停事件
+    videoContent.addEventListener('pause', () => {
+      videoPlay.className = 'iconfont iconbofang_huaban1'
+      clearInterval(timer)
+    })
+
+    videoPlay.addEventListener('click', () => {
+      if (videoContent.paused) {
+        videoContent.play()
+      } else {
+        videoContent.pause()
+      }
+    })
   }
 }
 
