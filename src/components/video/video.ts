@@ -86,6 +86,22 @@ class Video implements Icomponent {
 
     videoContent.volume = 0.5
 
+    // 是否自动播放
+    if (this.props.autoplay) {
+      timer = setInterval(playing, 1000)
+      videoContent.play().then(() => {})
+    }
+
+    // 控件划出
+    this.tempContainer.addEventListener('mouseenter', function () {
+      videoControls.style.bottom = 0
+    })
+
+    // 控件划入
+    this.tempContainer.addEventListener('mouseleave', function () {
+      videoControls.style.bottom = -50 + 'px'
+    })
+
     // 个位补零操作
     function setZero(num: number): string {
       if (num < 10) {

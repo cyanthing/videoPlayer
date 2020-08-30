@@ -15,7 +15,7 @@ for (let i = 0; i < listItem.length; i++) {
       height: '556px',
       pos: 'center',
       content(elem) {
-        video({ url, elem })
+        video({ url, elem, autoplay: true })
       }
     })
   })
