@@ -6,7 +6,7 @@ interface Ipopup {
   title: string;
   pos: string;
   mask: boolean;
-  content: () => void;
+  content: (content: HTMLElement) => void;
 }
 
 interface Icomponent {
@@ -41,6 +41,8 @@ class Popup implements Icomponent {
   init() {
     this.template()
     this.props.mask && this.createMask()
+    this.handle()
+    this.contentCallback()
   }
 
   // 创建模板
@@ -69,9 +71,13 @@ class Popup implements Icomponent {
     }
   }
 
-  // 事件操作
+  // 关闭事件操作
   handle() {
-
+    const popupClose = this.tempContainer.querySelector(`.${styles['popup-title']} i`)
+    popupClose.addEventListener('click', () => {
+      document.body.removeChild(this.tempContainer)
+      this.props.mask && document.body.removeChild(this.mask)
+    })
   }
 
   // 创建遮罩
@@ -81,6 +87,11 @@ class Popup implements Icomponent {
     this.mask.style.width = '100%'
     this.mask.style.height = document.body.offsetHeight + 'px'
     document.body.appendChild(this.mask)
+  }
+
+  contentCallback() {
+    const popupContent = this.tempContainer.querySelector(`.${styles['popup-content']}`)
+    this.props.content(popupContent)
   }
 }
 

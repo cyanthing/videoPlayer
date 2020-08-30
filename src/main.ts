@@ -13,6 +13,9 @@ for (let i = 0; i < listItem.length; i++) {
       width: '880px',
       height: '556px',
       pos: 'center',
+      content(elem) {
+        console.log(elem)
+      }
     })
   })
 }
