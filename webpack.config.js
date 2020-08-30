@@ -20,6 +20,23 @@ module.exports = {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
+        exclude: [
+          path.resolve(__dirname, 'src/components'),
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', {
+          loader: 'css-loader',
+          options: {
+            modules: {
+              localIdentName: '[path][name]__[local]--[hash:base64:5]',
+            },
+          },
+        }],
+        include: [
+          path.resolve(__dirname, 'src/components'),
+        ]
       },
       {
         test: /\.(eot|ttf|woff2|woff|svg)$/,
