@@ -1,10 +1,19 @@
 const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 
 module.exports = {
-  entry: './src/main.js',
+  entry: './src/main.ts',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'main.js',
+  },
+  devServer: {
+    contentBase: './dist',
+    open: true,
+  },
+  resolve: {
+    extensions: ['.wasm', '.ts', '.tsx', '.mjs', '.cjs', '.js', '.json'],
   },
   module: {
     rules: [
@@ -12,7 +21,22 @@ module.exports = {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
+      {
+        test: /\.(eot|ttf|woff2|woff|svg)$/,
+        use: ['file-loader'],
+      },
+      {
+        test: /\.ts$/,
+        use: ['ts-loader'],
+        exclude: /node_modules/,
+      },
     ]
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+    }),
+    new CleanWebpackPlugin(),
+  ],
   mode: 'development',
 }
