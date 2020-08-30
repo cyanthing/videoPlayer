@@ -81,7 +81,10 @@ class Video implements Icomponent {
     const videoFull = this.tempContainer.querySelector(`.${styles['video-full']} i`)
     const videoTimes = this.tempContainer.querySelectorAll(`.${styles['video-time']} span`)
     const videoProgress = this.tempContainer.querySelectorAll(`.${styles['video-progress']} div`)
+    const videoVolProgress = this.tempContainer.querySelectorAll(`.${styles['video-volprogress']} div`)
     let timer
+
+    videoContent.volume = 0.5
 
     // 个位补零操作
     function setZero(num: number): string {
@@ -130,7 +133,7 @@ class Video implements Icomponent {
     // 点击播放按钮
     videoPlay.addEventListener('click', () => {
       if (videoContent.paused) {
-        videoContent.play()
+        videoContent.play().then(() => {})
       } else {
         videoContent.pause()
       }
@@ -139,6 +142,49 @@ class Video implements Icomponent {
     // 全屏
     videoFull.addEventListener('click', () => {
       videoContent.requestFullscreen().then(() => {})
+    })
+
+    // 拖拽进度条
+    videoProgress[2].addEventListener('mousedown', function (event: MouseEvent) {
+      const downX = event.pageX
+      const downL = this.offsetLeft
+      document.onmousemove = (ev: MouseEvent) => {
+        let scale = (ev.pageX - downX + downL + 8) / this.parentNode.offsetWidth
+        if (scale < 0) {
+          scale = 0
+        } else if (scale > 1) {
+          scale = 1
+        }
+        videoProgress[0].style.width = scale * 100 + '%'
+        videoProgress[1].style.width = scale * 100 + '%'
+        this.style.left = scale * 100 + '%'
+        videoContent.currentTime = scale * videoContent.duration
+      }
+      document.onmouseup = () => {
+        document.onmousemove = document.onmouseup = null
+      }
+      event.preventDefault()
+    })
+
+    // 拖拽音量
+    videoVolProgress[1].addEventListener('mousedown', function (event: MouseEvent) {
+      const downX = event.pageX
+      const downL = this.offsetLeft
+      document.onmousemove = (ev: MouseEvent) => {
+        let scale = (ev.pageX - downX + downL + 8) / this.parentNode.offsetWidth
+        if (scale < 0) {
+          scale = 0
+        } else if (scale > 1) {
+          scale = 1
+        }
+        videoVolProgress[0].style.width = scale * 100 + '%'
+        this.style.left = scale * 100 + '%'
+        videoContent.volume = scale
+      }
+      document.onmouseup = () => {
+        document.onmousemove = document.onmouseup = null
+      }
+      event.preventDefault()
     })
   }
 }

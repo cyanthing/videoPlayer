@@ -117,7 +117,7 @@
 }
 
 .video-volprogress-now {
-    width: 0%;
+    width: 50%;
     height: 100%;
     background: #ff6700;
     z-index: 1;
@@ -125,7 +125,7 @@
 
 .video-volprogress-bar {
     position: absolute;
-    left: 0;
+    left: 50%;
     top: 0;
     margin-left: -7px;
     margin-top: -5px;
