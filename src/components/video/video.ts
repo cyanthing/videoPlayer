@@ -75,10 +75,12 @@ class Video implements Icomponent {
   }
 
   handle() {
-    const videoContent = this.tempContainer.querySelector(`.${styles['video-content']}`)
+    const videoContent: HTMLVideoElement = this.tempContainer.querySelector(`.${styles['video-content']}`)
     const videoControls = this.tempContainer.querySelector(`.${styles['video-controls']}`)
     const videoPlay = this.tempContainer.querySelector(`.${styles['video-play']} i`)
+    const videoFull = this.tempContainer.querySelector(`.${styles['video-full']} i`)
     const videoTimes = this.tempContainer.querySelectorAll(`.${styles['video-time']} span`)
+    const videoProgress = this.tempContainer.querySelectorAll(`.${styles['video-progress']} div`)
     let timer
 
     // 个位补零操作
@@ -103,9 +105,14 @@ class Video implements Icomponent {
       videoTimes[1].innerHTML = formatTime(videoContent.duration)
     })
 
-    // 播放进度变化
+    // 播放中：播放进度变化
     function playing() {
+      const scale = videoContent.currentTime / videoContent.duration
+      const scaleSuc = videoContent.buffered.end(0) / videoContent.duration
       videoTimes[0].innerHTML = formatTime(videoContent.currentTime)
+      videoProgress[0].style.width = scale * 100 + '%'
+      videoProgress[1].style.width = scaleSuc * 100 + '%'
+      videoProgress[2].style.left = scale * 100 + '%'
     }
 
     // 视频播放事件
@@ -120,12 +127,18 @@ class Video implements Icomponent {
       clearInterval(timer)
     })
 
+    // 点击播放按钮
     videoPlay.addEventListener('click', () => {
       if (videoContent.paused) {
         videoContent.play()
       } else {
         videoContent.pause()
       }
+    })
+
+    // 全屏
+    videoFull.addEventListener('click', () => {
+      videoContent.requestFullscreen().then(() => {})
     })
   }
 }
