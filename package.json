@@ -1,0 +1,29 @@
+{
+  "name": "video-player",
+  "version": "1.0.0",
+  "description": "弹层播放器的小demo，基于原生实现",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cyanthing/videoPlayer.git"
+  },
+  "keywords": [
+    "video player"
+  ],
+  "author": "AqinCyan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cyanthing/videoPlayer/issues"
+  },
+  "homepage": "https://github.com/cyanthing/videoPlayer#readme",
+  "devDependencies": {
+    "css-loader": "^4.2.2",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  }
+}
