@@ -8,6 +8,11 @@ for (let i = 0; i < listItem.length; i++) {
     let url = this.dataset.url
     let title = this.dataset.title
 
-    popup({})
+    popup({
+      title,
+      width: '880px',
+      height: '556px',
+      pos: 'center',
+    })
   })
 }
